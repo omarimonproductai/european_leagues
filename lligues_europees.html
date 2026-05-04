@@ -3,231 +3,390 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lligues Europees 2025/26</title>
+  <title>⚽ Lligues Europees 2025/26</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f1117; color: #e8e8e8; padding: 20px; }
-    h1 { text-align: center; font-size: 1.8rem; color: #fff; margin-bottom: 6px; }
-    .subtitle { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 28px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; max-width: 1400px; margin: 0 auto; }
-    .card { background: #1a1d27; border-radius: 12px; overflow: hidden; border: 1px solid #2a2d3a; }
-    .card-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; font-weight: 700; font-size: 1rem; }
-    .flag { font-size: 1.5rem; }
-    table { width: 100%; border-collapse: collapse; }
-    th { text-align: left; padding: 7px 10px; font-size: 0.7rem; color: #666; text-transform: uppercase; background: #13151e; border-bottom: 1px solid #2a2d3a; }
-    td { padding: 9px 10px; font-size: 0.875rem; border-bottom: 1px solid #1e2130; }
-    tr:last-child td { border-bottom: none; }
-    .pos { color: #666; font-size: 0.8rem; }
-    .team-name { font-weight: 600; }
-    .pts { font-weight: 700; color: #fff !important; }
-    .champion-row .team-name, .champion-row .pts { color: #ffd700 !important; }
-    .ucl { border-left: 3px solid #1a73e8; }
-    .uel { border-left: 3px solid #f57c00; }
-    .uecl { border-left: 3px solid #2e7d32; }
-    .rel { border-left: 3px solid #c62828; }
-    .legend { display: flex; gap: 16px; padding: 10px 16px; background: #13151e; border-top: 1px solid #2a2d3a; flex-wrap: wrap; }
-    .leg-item { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #888; }
-    .leg-dot { width: 10px; height: 14px; border-radius: 2px; }
-    .leg-ucl { background: #1a73e8; } .leg-uel { background: #f57c00; }
-    .leg-uecl { background: #2e7d32; } .leg-rel { background: #c62828; }
-    .updated { text-align: center; color: #555; font-size: 0.75rem; margin-top: 24px; }
-</style>
+    :root{
+      --bg:#0d1117; --bg2:#161b22; --bg3:#1c2128; --border:#30363d;
+      --text:#e6edf3; --muted:#8b949e;
+      --cl:#1a6fc4; --el:#f97316; --conf:#a855f7; --rel:#ef4444;
+      --green:#2ea043; --blue:#58a6ff; --gold:#ffd700;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--bg);color:var(--text);
+         font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh}
+    header{background:var(--bg2);border-bottom:1px solid var(--border);
+           padding:12px 18px;display:flex;align-items:center;gap:8px;
+           position:sticky;top:0;z-index:200}
+    header h1{font-size:1.05rem;font-weight:700;color:var(--blue)}
+    .meta{margin-left:auto;font-size:.72rem;color:var(--muted)}
+    .tabs-wrap{background:var(--bg2);border-bottom:1px solid var(--border);
+               overflow-x:auto;scrollbar-width:none;position:sticky;top:46px;z-index:150}
+    .tabs-wrap::-webkit-scrollbar{display:none}
+    .tabs{display:flex;padding:0 10px}
+    .tab{display:flex;align-items:center;gap:7px;padding:9px 13px;background:none;
+         border:none;color:var(--muted);font-size:.81rem;font-weight:500;cursor:pointer;
+         border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s;
+         font-family:inherit}
+    .tab:hover{color:var(--text)}
+    .tab.active{color:var(--text);border-bottom-color:var(--green)}
+    .tab-sum{border-right:1px solid var(--border);padding-right:16px;margin-right:6px}
+    .hero-flag{height:44px;width:auto;border-radius:4px;
+               box-shadow:0 2px 8px rgba(0,0,0,.5);flex-shrink:0}
+    .page{display:none;padding:16px;max-width:980px;margin:0 auto}
+    .page.active{display:block}
+    #pg-sum{max-width:none}
+    .hero{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+    .hero h2{font-size:1.3rem;font-weight:700}
+    .hero small{font-size:.79rem;color:var(--muted);display:block;margin-top:2px}
+    .hero-badge{margin-left:auto;font-size:.72rem;font-weight:700;
+                padding:6px 12px;border-radius:20px;background:#b8860b33;
+                color:var(--gold);border:1px solid #b8860b66;letter-spacing:.5px;
+                white-space:nowrap}
+    .card{background:var(--bg3);border:1px solid var(--border);
+          border-radius:10px;overflow:hidden;margin-bottom:14px}
+    .card-title{padding:8px 13px;background:var(--bg2);border-bottom:1px solid var(--border);
+                font-size:.69rem;font-weight:700;color:var(--muted);
+                text-transform:uppercase;letter-spacing:1px}
+    .champ-banner{padding:10px 13px;text-align:center;font-size:.85rem;color:var(--gold);
+                  background:linear-gradient(90deg,#b8860b22,#ffd70022,#b8860b22);
+                  border-bottom:1px solid #ffd70033;letter-spacing:.5px;font-weight:600}
+    .legend{display:flex;flex-wrap:wrap;gap:10px;padding:7px 13px;
+            border-bottom:1px solid var(--border)}
+    .li{display:flex;align-items:center;gap:5px;font-size:.68rem;color:var(--muted)}
+    .ld{width:8px;height:8px;border-radius:50%}
+    .tbl{width:100%;border-collapse:collapse;font-size:.8rem}
+    .tbl thead tr{background:rgba(255,255,255,.02)}
+    .tbl th{padding:6px 7px;font-size:.65rem;font-weight:700;color:var(--muted);
+            text-transform:uppercase;letter-spacing:.4px;text-align:center}
+    .tbl th.L,.tbl td.L{text-align:left}
+    .tbl td{padding:7px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)}
+    .tbl tr:last-child td{border-bottom:none}
+    .tbl tbody tr:hover td{background:rgba(255,255,255,.03)}
+    .pc{display:flex;align-items:center;gap:3px;justify-content:center}
+    .pb{width:3px;height:14px;border-radius:2px;flex-shrink:0}
+    .pn{font-weight:700;font-size:.75rem;min-width:13px}
+    .tc{display:flex;align-items:center;gap:6px}
+    .tl{width:20px;height:20px;object-fit:contain;flex-shrink:0;border-radius:50%;
+        background:#222;display:inline-flex;align-items:center;justify-content:center;
+        font-size:11px;font-weight:700;color:#888}
+    .tn{font-weight:500;white-space:nowrap}
+    .pts{font-weight:700;color:var(--blue)}
+    .gdp{color:#3fb950}.gdn{color:var(--rel)}
+    .tbl tr.champ .tn{color:var(--gold)}
+    .tbl tr.champ td.pts{color:var(--gold)}
+    .trophy{margin-left:5px}
+    /* Resum */
+    .sum-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .sum-tbl{border-collapse:collapse;font-size:.79rem;width:100%}
+    .sum-tbl thead tr{background:var(--bg2)}
+    .sum-tbl th{padding:7px 5px;font-size:.65rem;font-weight:700;
+                color:var(--muted);text-transform:uppercase;text-align:center;
+                border-bottom:2px solid var(--border)}
+    .sum-tbl th.lgh{background:var(--bg2);border-left:2px solid var(--border);
+                    border-right:2px solid var(--border);font-size:.72rem;
+                    color:var(--text);padding:7px 10px;white-space:nowrap;
+                    cursor:pointer;transition:color .15s}
+    .sum-tbl th.lgh:hover{color:var(--blue)}
+    .sum-tbl th.lgh img{vertical-align:middle;margin-right:4px}
+    .sum-tbl td{padding:4px 5px;text-align:center;
+                border-bottom:1px solid rgba(255,255,255,.04)}
+    .sum-tbl tr:last-child td{border-bottom:none}
+    .sum-tbl tbody tr:hover td{background:rgba(255,255,255,.03)}
+    .sum-tbl td.lgsep{border-left:2px solid var(--border)}
+    .sum-tbl td.lgend{border-right:2px solid var(--border)}
+    .s-pos{font-weight:700;font-size:.77rem;color:var(--muted);
+           min-width:24px;background:rgba(255,255,255,.02)}
+    .s-logo{width:26px;padding:3px 2px}
+    .s-name{text-align:left!important;white-space:nowrap;font-weight:500;
+            padding-left:2px;max-width:140px;overflow:hidden;text-overflow:ellipsis}
+    .s-pts{font-weight:700;color:var(--blue);min-width:26px}
+    .s-empty{color:var(--muted);font-size:.72rem}
+    .s-bar{display:inline-block;width:3px;height:13px;border-radius:2px;
+           vertical-align:middle;margin-right:3px}
+    .s-tbl tr.s-champ-row .s-name,
+    .s-tbl tr.s-champ-row .s-pts{color:var(--gold)}
+    .empty{padding:18px;text-align:center;color:var(--muted);font-size:.79rem}
+    @media(max-width:600px){.page{padding:8px}.tabs-wrap{top:44px}}
+  </style>
 </head>
 <body>
-<h1>⚽ Lligues Europees 2025/26</h1>
-<p class="subtitle">Actualitzat: 04/05/2026 06:59</p>
-<div class="grid">
+<header>
+  <span style="font-size:1.35rem">⚽</span>
+  <h1>Lligues Europees 2025/26</h1>
+  <span class="meta" id="metaDate"></span>
+</header>
+<div class="tabs-wrap"><div class="tabs" id="tabs"></div></div>
+<div id="pages"></div>
 
-  <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #c60b1e22, #c60b1e11);">
-      <span class="flag">🇪🇸</span>
-      <span>LaLiga EA Sports</span>
+<script>
+const UPDATED_AT = "03/05/2026 20:32";
+
+const LEAGUES = [
+  { id:'PD',  name:'La Liga',        country:'Espanya',       cc:'es',     cl:4, el:1, cf:1, rel:3 },
+  { id:'PL',  name:'Premier League', country:'Anglaterra',    cc:'gb-eng', cl:4, el:1, cf:1, rel:3 },
+  { id:'BL1', name:'Bundesliga',     country:'Alemanya',      cc:'de',     cl:4, el:1, cf:1, rel:3,
+    champion:{ name:'Bayern München', date:"19 d'abril" } },
+  { id:'SA',  name:'Serie A',        country:'Itàlia',        cc:'it',     cl:4, el:1, cf:1, rel:3 },
+  { id:'FL1', name:'Ligue 1',        country:'França',        cc:'fr',     cl:3, el:1, cf:1, rel:2 },
+  { id:'PPL', name:'Primeira Liga',  country:'Portugal',      cc:'pt',     cl:3, el:1, cf:1, rel:3 },
+  { id:'DED', name:'Eredivisie',     country:'Països Baixos', cc:'nl',     cl:1, el:1, cf:2, rel:2,
+    champion:{ name:'PSV', date:"5 d'abril (27è títol)" } },
+];
+
+const DATA = {
+  PD: { standings: [
+    { pos:1,  name:'Barça',         gp:34, w:29, d:1,  l:4,  gf:89, ga:31, gd:58,  pts:88 },
+    { pos:2,  name:'Real Madrid',   gp:33, w:23, d:5,  l:5,  gf:68, ga:31, gd:37,  pts:74 },
+    { pos:3,  name:'Villarreal',    gp:34, w:21, d:5,  l:8,  gf:64, ga:39, gd:25,  pts:68 },
+    { pos:4,  name:'Atleti',        gp:34, w:19, d:6,  l:9,  gf:58, ga:37, gd:21,  pts:63 },
+    { pos:5,  name:'Real Betis',    gp:34, w:13, d:14, l:7,  gf:52, ga:41, gd:11,  pts:53 },
+    { pos:6,  name:'Celta',         gp:34, w:12, d:11, l:11, gf:48, ga:44, gd:4,   pts:47 },
+    { pos:7,  name:'Getafe',        gp:34, w:13, d:5,  l:16, gf:28, ga:36, gd:-8,  pts:44 },
+    { pos:8,  name:'Athletic',      gp:34, w:13, d:5,  l:16, gf:40, ga:50, gd:-10, pts:44 },
+    { pos:9,  name:'Real Sociedad', gp:33, w:11, d:10, l:12, gf:52, ga:52, gd:0,   pts:43 },
+    { pos:10, name:'Osasuna',       gp:34, w:11, d:9,  l:14, gf:40, ga:42, gd:-2,  pts:42 },
+  ]},
+  PL: { standings: [
+    { pos:1, name:'Arsenal',       pts:76 },
+    { pos:2, name:'Man City',      pts:70 },
+    { pos:3, name:'Man United',    pts:64 },
+    { pos:4, name:'Liverpool',     pts:58 },
+    { pos:5, name:'Aston Villa',   pts:58 },
+    { pos:6, name:'Bournemouth',   pts:52 },
+    { pos:7, name:'Brentford',     pts:51 },
+    { pos:8, name:'Brighton Hove', pts:50 },
+    { pos:9, name:'Chelsea',       pts:48 },
+  ]},
+  BL1: { standings: [
+    { pos:1, name:'Bayern München', gp:32, w:25, d:4, l:3, gf:84, ga:32, gd:52, pts:79 },
+    { pos:2, name:'Dortmund',       gp:32, pts:67 },
+    { pos:3, name:'RB Leipzig',     pts:62 },
+    { pos:4, name:'Leverkusen',     pts:58 },
+    { pos:5, name:'Stuttgart',      pts:58 },
+    { pos:6, name:'Hoffenheim',     pts:58 },
+    { pos:7, name:'Freiburg',       pts:44 },
+    { pos:8, name:'Frankfurt',      pts:43 },
+    { pos:9, name:'Augsburg',       pts:40 },
+  ]},
+  SA: { standings: [
+    { pos:1, name:'Inter',     pts:79 },
+    { pos:2, name:'Napoli',    pts:70 },
+    { pos:3, name:'Milan',     pts:67 },
+    { pos:4, name:'Juventus',  pts:65 },
+    { pos:5, name:'Como 1907', pts:62 },
+    { pos:6, name:'Roma',      pts:61 },
+    { pos:7, name:'Atalanta',  pts:55 },
+    { pos:8, name:'Bologna',   pts:49 },
+    { pos:9, name:'Sassuolo',  pts:49 },
+  ]},
+  FL1: { standings: [
+    { pos:1, name:'PSG',            pts:70 },
+    { pos:2, name:'RC Lens',        pts:64 },
+    { pos:3, name:'Lille',          pts:58 },
+    { pos:4, name:'Olympique Lyon', pts:57 },
+    { pos:5, name:'Stade Rennais',  pts:56 },
+    { pos:6, name:'Monaco',         pts:54 },
+    { pos:7, name:'Marseille',      pts:53 },
+    { pos:8, name:'Strasbourg',     pts:46 },
+    { pos:9, name:'Lorient',        pts:42 },
+  ]},
+  PPL: { standings: [
+    { pos:1, name:'Porto',       pts:85 },
+    { pos:2, name:'SL Benfica',  pts:76 },
+    { pos:3, name:'Sporting CP', pts:73 },
+    { pos:4, name:'Braga',       pts:59 },
+    { pos:5, name:'Famalicão',   pts:52 },
+    { pos:6, name:'Gil Vicente', pts:49 },
+    { pos:7, name:'Vitória SC',  pts:42 },
+    { pos:8, name:'Moreirense',  pts:42 },
+    { pos:9, name:'Alverca',     pts:38 },
+  ]},
+  DED: { standings: [
+    { pos:1, name:'PSV',        pts:78 },
+    { pos:2, name:'Feyenoord',  pts:61 },
+    { pos:3, name:'NEC',        pts:56 },
+    { pos:4, name:'Ajax',       pts:55 },
+    { pos:5, name:'Twente',     pts:55 },
+    { pos:6, name:'AZ',         pts:50 },
+    { pos:7, name:'Heerenveen', pts:50 },
+    { pos:8, name:'Utrecht',    pts:47 },
+    { pos:9, name:'Sparta',     pts:43 },
+  ]},
+};
+
+const CDN = 'https://flagcdn.com';
+
+document.getElementById('metaDate').textContent = 'Actualitzat: ' + UPDATED_AT;
+
+function flagImg(cc, h){
+  return `<img src="${CDN}/w40/${cc}.png" alt="${cc}" style="height:${h||14}px;width:auto;border-radius:2px;vertical-align:middle">`;
+}
+function logoImg(name, size, url){
+  if (url) return `<img src="${url}" alt="${name}" width="${size}" height="${size}" class="tl" loading="lazy" onerror="this.outerHTML='<span class=&quot;tl&quot; style=&quot;width:${size}px;height:${size}px&quot;>${escapeAttr(name.charAt(0))}</span>'">`;
+  const initial = (name || '?').charAt(0).toUpperCase();
+  return `<span class="tl" style="width:${size}px;height:${size}px;font-size:${Math.round(size*0.55)}px">${initial}</span>`;
+}
+function escapeAttr(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function posBar(pos, total, lg){
+  if (pos <= lg.cl) return 'var(--cl)';
+  if (pos <= lg.cl + lg.el) return 'var(--el)';
+  if (pos <= lg.cl + lg.el + lg.cf) return 'var(--conf)';
+  if (total && pos > total - lg.rel) return 'var(--rel)';
+  return 'transparent';
+}
+function isChampion(lg, name){
+  return !!(lg.champion && lg.champion.name === name);
+}
+function fmt(v){
+  return (v === null || v === undefined) ? '<span style="color:var(--muted)">—</span>' : v;
+}
+function fmtGD(gd){
+  if (gd === null || gd === undefined) return '<span style="color:var(--muted)">—</span>';
+  if (gd > 0) return `<span class="gdp">+${gd}</span>`;
+  if (gd < 0) return `<span class="gdn">${gd}</span>`;
+  return '0';
+}
+
+function renderStandings(rows, lg){
+  if (!rows.length) return '<div class="empty">Sense dades de classificació</div>';
+  const total = rows.length;
+  const trs = rows.map(r => {
+    const bar = posBar(r.pos, total, lg);
+    const champ = isChampion(lg, r.name);
+    const trophy = champ ? ' <span class="trophy">🏆</span>' : '';
+    return `<tr class="${champ ? 'champ' : ''}">
+      <td><div class="pc"><div class="pb" style="background:${bar}"></div><span class="pn">${r.pos}</span></div></td>
+      <td class="L"><div class="tc">${logoImg(r.name, 20, r.logo)}<span class="tn">${r.name}${trophy}</span></div></td>
+      <td>${fmt(r.gp)}</td><td>${fmt(r.w)}</td><td>${fmt(r.d)}</td><td>${fmt(r.l)}</td>
+      <td>${fmt(r.gf)}</td><td>${fmt(r.ga)}</td><td>${fmtGD(r.gd)}</td>
+      <td class="pts">${fmt(r.pts)}</td>
+    </tr>`;
+  }).join('');
+  const legendItems = [];
+  if (lg.cl)  legendItems.push(`<div class="li"><div class="ld" style="background:var(--cl)"></div>Champions League</div>`);
+  if (lg.el)  legendItems.push(`<div class="li"><div class="ld" style="background:var(--el)"></div>Europa League</div>`);
+  if (lg.cf)  legendItems.push(`<div class="li"><div class="ld" style="background:var(--conf)"></div>Conference</div>`);
+  if (lg.rel) legendItems.push(`<div class="li"><div class="ld" style="background:var(--rel)"></div>Descens</div>`);
+  return `<div class="legend">${legendItems.join('')}</div>
+    <table class="tbl"><thead><tr>
+      <th>#</th><th class="L">Club</th>
+      <th>PJ</th><th>G</th><th>E</th><th>P</th>
+      <th>GF</th><th>GC</th><th>DG</th><th>Pts</th>
+    </tr></thead><tbody>${trs}</tbody></table>`;
+}
+
+function goToLeague(i){
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector(`.tab[data-i="${i}"]`);
+  if (btn) { btn.classList.add('active'); btn.scrollIntoView({inline:'nearest', block:'nearest'}); }
+  const pg = document.getElementById(`pg${i}`);
+  if (pg) pg.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function renderSummary(){
+  const MAX = 20;
+  let hdr = `<th class="s-pos">#</th>`;
+  LEAGUES.forEach((lg, i) => {
+    hdr += `<th colspan="3" class="lgh" onclick="goToLeague(${i})">${flagImg(lg.cc, 13)} ${lg.name}</th>`;
+  });
+  let body = '';
+  for (let i = 1; i <= MAX; i++) {
+    let row = `<tr class="${i===1 ? 'first' : ''}">`;
+    row += `<td class="s-pos">${i}</td>`;
+    LEAGUES.forEach((lg, li) => {
+      const rows = DATA[lg.id]?.standings || [];
+      const team = rows.find(t => t.pos === i);
+      const isLast = li === LEAGUES.length - 1;
+      if (team) {
+        const bar = posBar(i, rows.length, lg);
+        const champ = isChampion(lg, team.name);
+        const champCls = champ ? ' s-champ' : '';
+        const trophy = champ ? ' 🏆' : '';
+        row += `<td class="s-logo lgsep">${logoImg(team.name, 18, team.logo)}</td>
+                <td class="s-name${champCls}"><span class="s-bar" style="background:${bar}"></span>${team.name}${trophy}</td>
+                <td class="s-pts${isLast?' lgend':''}${champCls}">${team.pts ?? '–'}</td>`;
+      } else {
+        row += `<td class="s-logo lgsep s-empty">–</td>
+                <td class="s-name s-empty">–</td>
+                <td class="s-pts${isLast?' lgend':''} s-empty">–</td>`;
+      }
+    });
+    row += '</tr>';
+    body += row;
+  }
+  return `<div class="sum-wrap"><table class="sum-tbl s-tbl">
+    <thead><tr>${hdr}</tr></thead>
+    <tbody>${body}</tbody>
+  </table></div>`;
+}
+
+function build(){
+  const tabsEl  = document.getElementById('tabs');
+  const pagesEl = document.getElementById('pages');
+
+  const sumBtn = document.createElement('button');
+  sumBtn.className = 'tab tab-sum active';
+  sumBtn.innerHTML = `${flagImg('eu', 14)} Resum`;
+  sumBtn.dataset.i = 'sum';
+  tabsEl.appendChild(sumBtn);
+
+  const sumPg = document.createElement('div');
+  sumPg.className = 'page active';
+  sumPg.id = 'pg-sum';
+  sumPg.innerHTML = `
+    <div class="hero">
+      <img src="${CDN}/w80/eu.png" alt="EU" class="hero-flag">
+      <div><h2>Resum Europeu</h2><small>Les 7 primeres divisions · 2025/26</small></div>
     </div>
-    <table>
-      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
-      <tbody>
-<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">FC Barcelona</td><td>34</td><td class="pts">88</td></tr>
-<tr class="ucl"><td class="pos">2</td><td class="team-name">Real Madrid CF</td><td>34</td><td class="pts">77</td></tr>
-<tr class="ucl"><td class="pos">3</td><td class="team-name">Villarreal CF</td><td>34</td><td class="pts">68</td></tr>
-<tr class="ucl"><td class="pos">4</td><td class="team-name">Club Atlético de Madrid</td><td>34</td><td class="pts">63</td></tr>
-<tr class="uel"><td class="pos">5</td><td class="team-name">Real Betis Balompié</td><td>34</td><td class="pts">53</td></tr>
-<tr class="uecl"><td class="pos">6</td><td class="team-name">RC Celta de Vigo</td><td>34</td><td class="pts">47</td></tr>
-<tr class=""><td class="pos">7</td><td class="team-name">Getafe CF</td><td>34</td><td class="pts">44</td></tr>
-<tr class=""><td class="pos">8</td><td class="team-name">Athletic Club</td><td>34</td><td class="pts">44</td></tr>
-<tr class=""><td class="pos">9</td><td class="team-name">Real Sociedad de Fútbol</td><td>33</td><td class="pts">43</td></tr>
-<tr class=""><td class="pos">10</td><td class="team-name">CA Osasuna</td><td>34</td><td class="pts">42</td></tr>
-      </tbody>
-    </table>
-    <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
-      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
-      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #3d195b22, #3d195b11);">
-      <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
-      <span>Premier League</span>
-    </div>
-    <table>
-      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
-      <tbody>
-<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">Arsenal FC</td><td>35</td><td class="pts">76</td></tr>
-<tr class="ucl"><td class="pos">2</td><td class="team-name">Manchester City FC</td><td>33</td><td class="pts">70</td></tr>
-<tr class="ucl"><td class="pos">3</td><td class="team-name">Manchester United FC</td><td>35</td><td class="pts">64</td></tr>
-<tr class="ucl"><td class="pos">4</td><td class="team-name">Liverpool FC</td><td>35</td><td class="pts">58</td></tr>
-<tr class="uel"><td class="pos">5</td><td class="team-name">Aston Villa FC</td><td>35</td><td class="pts">58</td></tr>
-<tr class="uecl"><td class="pos">6</td><td class="team-name">AFC Bournemouth</td><td>35</td><td class="pts">52</td></tr>
-<tr class=""><td class="pos">7</td><td class="team-name">Brentford FC</td><td>35</td><td class="pts">51</td></tr>
-<tr class=""><td class="pos">8</td><td class="team-name">Brighton & Hove Albion FC</td><td>35</td><td class="pts">50</td></tr>
-<tr class=""><td class="pos">9</td><td class="team-name">Chelsea FC</td><td>34</td><td class="pts">48</td></tr>
-<tr class=""><td class="pos">10</td><td class="team-name">Fulham FC</td><td>35</td><td class="pts">48</td></tr>
-      </tbody>
-    </table>
-    <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
-      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
-      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #d3001022, #d3001011);">
-      <span class="flag">🇩🇪</span>
-      <span>Bundesliga</span>
-    </div>
-    <table>
-      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
-      <tbody>
-<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">FC Bayern München</td><td>32</td><td class="pts">83</td></tr>
-<tr class="ucl"><td class="pos">2</td><td class="team-name">Borussia Dortmund</td><td>32</td><td class="pts">67</td></tr>
-<tr class="ucl"><td class="pos">3</td><td class="team-name">RB Leipzig</td><td>32</td><td class="pts">62</td></tr>
-<tr class="ucl"><td class="pos">4</td><td class="team-name">Bayer 04 Leverkusen</td><td>32</td><td class="pts">58</td></tr>
-<tr class="uel"><td class="pos">5</td><td class="team-name">VfB Stuttgart</td><td>32</td><td class="pts">58</td></tr>
-<tr class="uecl"><td class="pos">6</td><td class="team-name">TSG 1899 Hoffenheim</td><td>32</td><td class="pts">58</td></tr>
-<tr class=""><td class="pos">7</td><td class="team-name">SC Freiburg</td><td>32</td><td class="pts">44</td></tr>
-<tr class=""><td class="pos">8</td><td class="team-name">Eintracht Frankfurt</td><td>32</td><td class="pts">43</td></tr>
-<tr class=""><td class="pos">9</td><td class="team-name">FC Augsburg</td><td>32</td><td class="pts">40</td></tr>
-<tr class=""><td class="pos">10</td><td class="team-name">1. FSV Mainz 05</td><td>32</td><td class="pts">37</td></tr>
-      </tbody>
-    </table>
-    <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
-      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
-      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #00922522, #00922511);">
-      <span class="flag">🇮🇹</span>
-      <span>Serie A</span>
-    </div>
-    <table>
-      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
-      <tbody>
-<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">FC Internazionale Milano</td><td>35</td><td class="pts">82</td></tr>
-<tr class="ucl"><td class="pos">2</td><td class="team-name">SSC Napoli</td><td>35</td><td class="pts">70</td></tr>
-<tr class="ucl"><td class="pos">3</td><td class="team-name">AC Milan</td><td>35</td><td class="pts">67</td></tr>
-<tr class="ucl"><td class="pos">4</td><td class="team-name">Juventus FC</td><td>35</td><td class="pts">65</td></tr>
-<tr class="uel"><td class="pos">5</td><td class="team-name">Como 1907</td><td>35</td><td class="pts">62</td></tr>
-<tr class="uecl"><td class="pos">6</td><td class="team-name">AS Roma</td><td>34</td><td class="pts">61</td></tr>
-<tr class=""><td class="pos">7</td><td class="team-name">Atalanta BC</td><td>35</td><td class="pts">55</td></tr>
-<tr class=""><td class="pos">8</td><td class="team-name">Bologna FC 1909</td><td>35</td><td class="pts">49</td></tr>
-<tr class=""><td class="pos">9</td><td class="team-name">US Sassuolo Calcio</td><td>35</td><td class="pts">49</td></tr>
-<tr class=""><td class="pos">10</td><td class="team-name">SS Lazio</td><td>34</td><td class="pts">48</td></tr>
-      </tbody>
-    </table>
-    <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
-      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
-      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #00205622, #00205611);">
-      <span class="flag">🇫🇷</span>
-      <span>Ligue 1 McDonald's</span>
-    </div>
-    <table>
-      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
-      <tbody>
-<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">Paris Saint-Germain FC</td><td>31</td><td class="pts">70</td></tr>
-<tr class="ucl"><td class="pos">2</td><td class="team-name">Racing Club de Lens</td><td>31</td><td class="pts">64</td></tr>
-<tr class="ucl"><td class="pos">3</td><td class="team-name">Olympique Lyonnais</td><td>32</td><td class="pts">60</td></tr>
-<tr class="ucl"><td class="pos">4</td><td class="team-name">Lille OSC</td><td>32</td><td class="pts">58</td></tr>
-<tr class="uel"><td class="pos">5</td><td class="team-name">Stade Rennais FC 1901</td><td>32</td><td class="pts">56</td></tr>
-<tr class="uecl"><td class="pos">6</td><td class="team-name">AS Monaco FC</td><td>32</td><td class="pts">54</td></tr>
-<tr class=""><td class="pos">7</td><td class="team-name">Olympique de Marseille</td><td>32</td><td class="pts">53</td></tr>
-<tr class=""><td class="pos">8</td><td class="team-name">RC Strasbourg Alsace</td><td>31</td><td class="pts">46</td></tr>
-<tr class=""><td class="pos">9</td><td class="team-name">FC Lorient</td><td>32</td><td class="pts">42</td></tr>
-<tr class=""><td class="pos">10</td><td class="team-name">Toulouse FC</td><td>32</td><td class="pts">41</td></tr>
-      </tbody>
-    </table>
-    <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
-      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
-      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #00612922, #00612911);">
-      <span class="flag">🇵🇹</span>
-      <span>Liga Portugal Betclic</span>
-    </div>
-    <table>
-      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
-      <tbody>
-<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">FC Porto</td><td>32</td><td class="pts">85</td></tr>
-<tr class="ucl"><td class="pos">2</td><td class="team-name">Sport Lisboa e Benfica</td><td>32</td><td class="pts">76</td></tr>
-<tr class="ucl"><td class="pos">3</td><td class="team-name">Sporting Clube de Portugal</td><td>31</td><td class="pts">73</td></tr>
-<tr class="ucl"><td class="pos">4</td><td class="team-name">Sporting Clube de Braga</td><td>32</td><td class="pts">57</td></tr>
-<tr class="uel"><td class="pos">5</td><td class="team-name">FC Famalicão</td><td>32</td><td class="pts">52</td></tr>
-<tr class="uecl"><td class="pos">6</td><td class="team-name">Gil Vicente FC</td><td>32</td><td class="pts">50</td></tr>
-<tr class=""><td class="pos">7</td><td class="team-name">Vitória SC</td><td>31</td><td class="pts">42</td></tr>
-<tr class=""><td class="pos">8</td><td class="team-name">Moreirense FC</td><td>32</td><td class="pts">42</td></tr>
-<tr class=""><td class="pos">9</td><td class="team-name">GD Estoril Praia</td><td>32</td><td class="pts">38</td></tr>
-<tr class=""><td class="pos">10</td><td class="team-name">FC Alverca</td><td>32</td><td class="pts">38</td></tr>
-      </tbody>
-    </table>
-    <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
-      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
-      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #AE163522, #AE163511);">
-      <span class="flag">🇳🇱</span>
-      <span>Eredivisie</span>
-    </div>
-    <table>
-      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
-      <tbody>
-<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">PSV</td><td>32</td><td class="pts">78</td></tr>
-<tr class="ucl"><td class="pos">2</td><td class="team-name">Feyenoord Rotterdam</td><td>32</td><td class="pts">61</td></tr>
-<tr class="ucl"><td class="pos">3</td><td class="team-name">NEC</td><td>32</td><td class="pts">56</td></tr>
-<tr class="ucl"><td class="pos">4</td><td class="team-name">AFC Ajax</td><td>32</td><td class="pts">55</td></tr>
-<tr class="uel"><td class="pos">5</td><td class="team-name">FC Twente '65</td><td>32</td><td class="pts">55</td></tr>
-<tr class="uecl"><td class="pos">6</td><td class="team-name">AZ</td><td>32</td><td class="pts">50</td></tr>
-<tr class=""><td class="pos">7</td><td class="team-name">SC Heerenveen</td><td>32</td><td class="pts">50</td></tr>
-<tr class=""><td class="pos">8</td><td class="team-name">FC Utrecht</td><td>32</td><td class="pts">47</td></tr>
-<tr class=""><td class="pos">9</td><td class="team-name">Sparta Rotterdam</td><td>32</td><td class="pts">43</td></tr>
-<tr class=""><td class="pos">10</td><td class="team-name">FC Groningen</td><td>32</td><td class="pts">42</td></tr>
-      </tbody>
-    </table>
-    <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
-      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
-      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
-    </div>
-  </div>
-</div>
-<p class="updated">Font: football-data.org · Actualitzat automàticament</p>
+    <div class="card">
+      <div class="card-title">📊 Classificació per posició</div>
+      ${renderSummary()}
+    </div>`;
+  pagesEl.appendChild(sumPg);
+
+  LEAGUES.forEach((lg, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab';
+    btn.innerHTML = `${flagImg(lg.cc, 14)} ${lg.name}`;
+    btn.dataset.i = i;
+    tabsEl.appendChild(btn);
+
+    const d  = DATA[lg.id] || {};
+    const pg = document.createElement('div');
+    pg.className = 'page';
+    pg.id = `pg${i}`;
+    const champBadge  = lg.champion ? `<div class="hero-badge">✓ CAMPIÓ</div>` : '';
+    const champBanner = lg.champion ? `<div class="champ-banner">🏆 ${lg.champion.name} — Campió el ${lg.champion.date}</div>` : '';
+    pg.innerHTML = `
+      <div class="hero">
+        <img src="${CDN}/w80/${lg.cc}.png" alt="${lg.country}" class="hero-flag">
+        <div><h2>${lg.name}</h2><small>${lg.country} · 2025/26</small></div>
+        ${champBadge}
+      </div>
+      <div class="card">
+        <div class="card-title">📊 Classificació</div>
+        ${champBanner}
+        ${renderStandings(d.standings || [], lg)}
+      </div>`;
+    pagesEl.appendChild(pg);
+  });
+
+  tabsEl.addEventListener('click', e => {
+    const btn = e.target.closest('.tab');
+    if (!btn) return;
+    const id = btn.dataset.i;
+    tabsEl.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id === 'sum' ? 'pg-sum' : `pg${id}`).classList.add('active');
+    window.scrollTo(0, 0);
+  });
+}
+
+build();
+</script>
 </body>
 </html>
