@@ -18,7 +18,7 @@ API key gratuïta: https://www.football-data.org/client/register
 import json
 import os
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 
 import requests
 
@@ -255,7 +255,13 @@ const DATA       = __DATA__;
 
 const CDN = 'https://flagcdn.com';
 
-document.getElementById('metaDate').textContent = 'Actualitzat: ' + UPDATED_AT;
+function formatLocal(iso){
+  const d = new Date(iso);
+  if (isNaN(d)) return iso;
+  const pad = n => String(n).padStart(2, '0');
+  return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+document.getElementById('metaDate').textContent = 'Actualitzat: ' + formatLocal(UPDATED_AT);
 
 function flagImg(cc, h){
   return `<img src="${CDN}/w40/${cc}.png" alt="${cc}" style="height:${h||14}px;width:auto;border-radius:2px;vertical-align:middle">`;
@@ -440,7 +446,7 @@ def main():
 
     print(f"Actualitzant lligues — {datetime.now().strftime('%d/%m/%Y %H:%M')}")
     leagues, data = build_data()
-    updated_at = datetime.now().strftime("%d/%m/%Y %H:%M")
+    updated_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     html = (HTML_TEMPLATE
             .replace("__UPDATED_AT__", json.dumps(updated_at, ensure_ascii=False))
