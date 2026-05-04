@@ -20,6 +20,11 @@
            position:sticky;top:0;z-index:200}
     header h1{font-size:1.05rem;font-weight:700;color:var(--blue)}
     .meta{margin-left:auto;font-size:.72rem;color:var(--muted)}
+    .refresh-btn{font-size:.72rem;padding:4px 10px;border-radius:6px;
+                 background:var(--bg3);border:1px solid var(--border);
+                 color:var(--blue);text-decoration:none;white-space:nowrap;
+                 transition:background .15s,color .15s}
+    .refresh-btn:hover{background:var(--cl);color:#fff;border-color:var(--cl)}
     .tabs-wrap{background:var(--bg2);border-bottom:1px solid var(--border);
                overflow-x:auto;scrollbar-width:none;position:sticky;top:46px;z-index:150}
     .tabs-wrap::-webkit-scrollbar{display:none}
@@ -114,6 +119,10 @@
   <span style="font-size:1.35rem">⚽</span>
   <h1>Lligues Europees 2025/26</h1>
   <span class="meta" id="metaDate"></span>
+  <a href="https://github.com/omarimonagentai/europeanleagues/actions/workflows/update.yml"
+     target="_blank" rel="noopener"
+     class="refresh-btn"
+     title="Demana refresc de dades a l'Action de GitHub">↻ Actualitzar</a>
 </header>
 <div class="tabs-wrap"><div class="tabs" id="tabs"></div></div>
 <div id="pages"></div>
