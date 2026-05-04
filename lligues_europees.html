@@ -6,399 +6,228 @@
   <title>Lligues Europees 2025/26</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #0f1117;
-      color: #e8e8e8;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      font-size: 1.8rem;
-      color: #fff;
-      margin-bottom: 6px;
-      letter-spacing: 1px;
-    }
-    .subtitle {
-      text-align: center;
-      color: #888;
-      font-size: 0.85rem;
-      margin-bottom: 28px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 20px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    .card {
-      background: #1a1d27;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid #2a2d3a;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-    }
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.5px;
-    }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f1117; color: #e8e8e8; padding: 20px; }
+    h1 { text-align: center; font-size: 1.8rem; color: #fff; margin-bottom: 6px; }
+    .subtitle { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 28px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; max-width: 1400px; margin: 0 auto; }
+    .card { background: #1a1d27; border-radius: 12px; overflow: hidden; border: 1px solid #2a2d3a; }
+    .card-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; font-weight: 700; font-size: 1rem; }
     .flag { font-size: 1.5rem; }
-    .badge {
-      margin-left: auto;
-      font-size: 0.65rem;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.1);
-      color: #aaa;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .badge.champion { background: #b8860b33; color: #ffd700; border: 1px solid #b8860b66; }
     table { width: 100%; border-collapse: collapse; }
-    th {
-      text-align: left;
-      padding: 7px 10px;
-      font-size: 0.7rem;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      background: #13151e;
-      border-bottom: 1px solid #2a2d3a;
-    }
-    th:not(:first-child):not(:nth-child(2)) { text-align: center; }
-    td {
-      padding: 9px 10px;
-      font-size: 0.875rem;
-      border-bottom: 1px solid #1e2130;
-    }
-    td:not(:first-child):not(:nth-child(2)) { text-align: center; color: #bbb; }
+    th { text-align: left; padding: 7px 10px; font-size: 0.7rem; color: #666; text-transform: uppercase; background: #13151e; border-bottom: 1px solid #2a2d3a; }
+    td { padding: 9px 10px; font-size: 0.875rem; border-bottom: 1px solid #1e2130; }
     tr:last-child td { border-bottom: none; }
-    .pos { color: #666; font-size: 0.8rem; width: 20px; }
-    .team-name { font-weight: 600; color: #e8e8e8; }
-    .pts { font-weight: 700; color: #fff !important; font-size: 0.95rem; }
-    tr:first-child .team-name { color: #ffd700; }
-    tr:first-child .pts { color: #ffd700 !important; }
+    .pos { color: #666; font-size: 0.8rem; }
+    .team-name { font-weight: 600; }
+    .pts { font-weight: 700; color: #fff !important; }
+    .champion-row .team-name, .champion-row .pts { color: #ffd700 !important; }
     .ucl { border-left: 3px solid #1a73e8; }
     .uel { border-left: 3px solid #f57c00; }
     .uecl { border-left: 3px solid #2e7d32; }
     .rel { border-left: 3px solid #c62828; }
-    tr.champion-row .team-name { color: #ffd700; }
-    tr.champion-row .pts { color: #ffd700 !important; }
-
-    .legend {
-      display: flex;
-      gap: 16px;
-      padding: 10px 16px;
-      background: #13151e;
-      border-top: 1px solid #2a2d3a;
-      flex-wrap: wrap;
-    }
+    .legend { display: flex; gap: 16px; padding: 10px 16px; background: #13151e; border-top: 1px solid #2a2d3a; flex-wrap: wrap; }
     .leg-item { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: #888; }
     .leg-dot { width: 10px; height: 14px; border-radius: 2px; }
-    .leg-ucl { background: #1a73e8; }
-    .leg-uel { background: #f57c00; }
-    .leg-uecl { background: #2e7d32; }
-    .leg-rel { background: #c62828; }
-
-    .updated {
-      text-align: center;
-      color: #555;
-      font-size: 0.75rem;
-      margin-top: 24px;
-      padding-bottom: 10px;
-    }
-    .champion-banner {
-      background: linear-gradient(90deg, #b8860b22, #ffd70022, #b8860b22);
-      border-bottom: 1px solid #ffd70033;
-      padding: 5px 16px;
-      font-size: 0.75rem;
-      color: #ffd700;
-      text-align: center;
-      letter-spacing: 0.5px;
-    }
-  </style>
+    .leg-ucl { background: #1a73e8; } .leg-uel { background: #f57c00; }
+    .leg-uecl { background: #2e7d32; } .leg-rel { background: #c62828; }
+    .updated { text-align: center; color: #555; font-size: 0.75rem; margin-top: 24px; }
+</style>
 </head>
 <body>
-
 <h1>⚽ Lligues Europees 2025/26</h1>
-<p class="subtitle">Actualitzat: 3 de maig de 2026</p>
-
+<p class="subtitle">Actualitzat: 04/05/2026 06:54</p>
 <div class="grid">
 
-  <!-- LA LIGA -->
   <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #c60b1e22, #ffc40022);">
+    <div class="card-header" style="background: linear-gradient(135deg, #c60b1e22, #c60b1e11);">
       <span class="flag">🇪🇸</span>
       <span>LaLiga EA Sports</span>
-      <span class="badge">Jornada 34</span>
     </div>
     <table>
-      <thead>
-        <tr>
-          <th>#</th><th>Equip</th><th>PJ</th><th>Pts</th>
-        </tr>
-      </thead>
+      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
       <tbody>
-        <tr class="ucl champion-row">
-          <td class="pos">1</td><td class="team-name">FC Barcelona</td><td>34</td><td class="pts">88</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">2</td><td class="team-name">Real Madrid</td><td>33</td><td class="pts">74</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">3</td><td class="team-name">Villarreal CF</td><td>34</td><td class="pts">68</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">4</td><td class="team-name">Atlético de Madrid</td><td>34</td><td class="pts">63</td>
-        </tr>
-        <tr class="uel">
-          <td class="pos">5</td><td class="team-name">Real Betis</td><td>33</td><td class="pts">50</td>
-        </tr>
+<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">FC Barcelona</td><td>34</td><td class="pts">88</td></tr>
+<tr class="ucl"><td class="pos">2</td><td class="team-name">Real Madrid CF</td><td>34</td><td class="pts">77</td></tr>
+<tr class="ucl"><td class="pos">3</td><td class="team-name">Villarreal CF</td><td>34</td><td class="pts">68</td></tr>
+<tr class="ucl"><td class="pos">4</td><td class="team-name">Club Atlético de Madrid</td><td>34</td><td class="pts">63</td></tr>
+<tr class="uel"><td class="pos">5</td><td class="team-name">Real Betis Balompié</td><td>34</td><td class="pts">53</td></tr>
+<tr class="uecl"><td class="pos">6</td><td class="team-name">RC Celta de Vigo</td><td>34</td><td class="pts">47</td></tr>
+<tr class=""><td class="pos">7</td><td class="team-name">Getafe CF</td><td>34</td><td class="pts">44</td></tr>
+<tr class=""><td class="pos">8</td><td class="team-name">Athletic Club</td><td>34</td><td class="pts">44</td></tr>
+<tr class=""><td class="pos">9</td><td class="team-name">Real Sociedad de Fútbol</td><td>33</td><td class="pts">43</td></tr>
+<tr class=""><td class="pos">10</td><td class="team-name">CA Osasuna</td><td>34</td><td class="pts">42</td></tr>
       </tbody>
     </table>
     <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions League</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa League</div>
+      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
+      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
+      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
+      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
     </div>
   </div>
-
-  <!-- PREMIER LEAGUE -->
   <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #3d195b22, #00ff8522);">
+    <div class="card-header" style="background: linear-gradient(135deg, #3d195b22, #3d195b11);">
       <span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
       <span>Premier League</span>
-      <span class="badge">Jornada 35</span>
     </div>
     <table>
-      <thead>
-        <tr>
-          <th>#</th><th>Equip</th><th>PJ</th><th>Pts</th>
-        </tr>
-      </thead>
+      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
       <tbody>
-        <tr class="ucl champion-row">
-          <td class="pos">1</td><td class="team-name">Arsenal</td><td>34</td><td class="pts">73</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">2</td><td class="team-name">Manchester City</td><td>32</td><td class="pts">67</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">3</td><td class="team-name">Aston Villa</td><td>34</td><td class="pts">65</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">4</td><td class="team-name">Manchester United</td><td>34</td><td class="pts">65</td>
-        </tr>
-        <tr class="uel">
-          <td class="pos">5</td><td class="team-name">Liverpool</td><td>34</td><td class="pts">63</td>
-        </tr>
+<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">Arsenal FC</td><td>35</td><td class="pts">76</td></tr>
+<tr class="ucl"><td class="pos">2</td><td class="team-name">Manchester City FC</td><td>33</td><td class="pts">70</td></tr>
+<tr class="ucl"><td class="pos">3</td><td class="team-name">Manchester United FC</td><td>35</td><td class="pts">64</td></tr>
+<tr class="ucl"><td class="pos">4</td><td class="team-name">Liverpool FC</td><td>35</td><td class="pts">58</td></tr>
+<tr class="uel"><td class="pos">5</td><td class="team-name">Aston Villa FC</td><td>35</td><td class="pts">58</td></tr>
+<tr class="uecl"><td class="pos">6</td><td class="team-name">AFC Bournemouth</td><td>35</td><td class="pts">52</td></tr>
+<tr class=""><td class="pos">7</td><td class="team-name">Brentford FC</td><td>35</td><td class="pts">51</td></tr>
+<tr class=""><td class="pos">8</td><td class="team-name">Brighton & Hove Albion FC</td><td>35</td><td class="pts">50</td></tr>
+<tr class=""><td class="pos">9</td><td class="team-name">Chelsea FC</td><td>34</td><td class="pts">48</td></tr>
+<tr class=""><td class="pos">10</td><td class="team-name">Fulham FC</td><td>35</td><td class="pts">48</td></tr>
       </tbody>
     </table>
     <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions League</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa League</div>
+      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
+      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
+      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
+      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
     </div>
   </div>
-
-  <!-- BUNDESLIGA -->
   <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #d3001022, #ffcc0022);">
+    <div class="card-header" style="background: linear-gradient(135deg, #d3001022, #d3001011);">
       <span class="flag">🇩🇪</span>
       <span>Bundesliga</span>
-      <span class="badge champion">✓ Campió</span>
     </div>
-    <div class="champion-banner">🏆 Bayern München — Campió el 19 d'abril</div>
     <table>
-      <thead>
-        <tr>
-          <th>#</th><th>Equip</th><th>PJ</th><th>Pts</th>
-        </tr>
-      </thead>
+      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
       <tbody>
-        <tr class="ucl champion-row">
-          <td class="pos">1</td><td class="team-name">Bayern München 🏆</td><td>32</td><td class="pts">79</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">2</td><td class="team-name">Borussia Dortmund</td><td>32</td><td class="pts">64</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">3</td><td class="team-name">RB Leipzig</td><td>32</td><td class="pts">59</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">4</td><td class="team-name">VfB Stuttgart</td><td>32</td><td class="pts">56</td>
-        </tr>
-        <tr class="uel">
-          <td class="pos">5</td><td class="team-name">TSG Hoffenheim</td><td>32</td><td class="pts">54</td>
-        </tr>
+<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">FC Bayern München</td><td>32</td><td class="pts">83</td></tr>
+<tr class="ucl"><td class="pos">2</td><td class="team-name">Borussia Dortmund</td><td>32</td><td class="pts">67</td></tr>
+<tr class="ucl"><td class="pos">3</td><td class="team-name">RB Leipzig</td><td>32</td><td class="pts">62</td></tr>
+<tr class="ucl"><td class="pos">4</td><td class="team-name">Bayer 04 Leverkusen</td><td>32</td><td class="pts">58</td></tr>
+<tr class="uel"><td class="pos">5</td><td class="team-name">VfB Stuttgart</td><td>32</td><td class="pts">58</td></tr>
+<tr class="uecl"><td class="pos">6</td><td class="team-name">TSG 1899 Hoffenheim</td><td>32</td><td class="pts">58</td></tr>
+<tr class=""><td class="pos">7</td><td class="team-name">SC Freiburg</td><td>32</td><td class="pts">44</td></tr>
+<tr class=""><td class="pos">8</td><td class="team-name">Eintracht Frankfurt</td><td>32</td><td class="pts">43</td></tr>
+<tr class=""><td class="pos">9</td><td class="team-name">FC Augsburg</td><td>32</td><td class="pts">40</td></tr>
+<tr class=""><td class="pos">10</td><td class="team-name">1. FSV Mainz 05</td><td>32</td><td class="pts">37</td></tr>
       </tbody>
     </table>
     <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions League</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa League</div>
+      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
+      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
+      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
+      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
     </div>
   </div>
-
-  <!-- SERIE A -->
   <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #00922522, #003DA522);">
+    <div class="card-header" style="background: linear-gradient(135deg, #00922522, #00922511);">
       <span class="flag">🇮🇹</span>
       <span>Serie A</span>
-      <span class="badge">Jornada 35</span>
     </div>
     <table>
-      <thead>
-        <tr>
-          <th>#</th><th>Equip</th><th>PJ</th><th>Pts</th>
-        </tr>
-      </thead>
+      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
       <tbody>
-        <tr class="ucl champion-row">
-          <td class="pos">1</td><td class="team-name">Inter Milano</td><td>34</td><td class="pts">79</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">2</td><td class="team-name">Napoli</td><td>34</td><td class="pts">70</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">3</td><td class="team-name">AC Milan</td><td>34</td><td class="pts">67</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">4</td><td class="team-name">Juventus</td><td>34</td><td class="pts">64</td>
-        </tr>
-        <tr class="uel">
-          <td class="pos">5</td><td class="team-name">Como</td><td>34</td><td class="pts">62</td>
-        </tr>
+<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">FC Internazionale Milano</td><td>35</td><td class="pts">82</td></tr>
+<tr class="ucl"><td class="pos">2</td><td class="team-name">SSC Napoli</td><td>35</td><td class="pts">70</td></tr>
+<tr class="ucl"><td class="pos">3</td><td class="team-name">AC Milan</td><td>35</td><td class="pts">67</td></tr>
+<tr class="ucl"><td class="pos">4</td><td class="team-name">Juventus FC</td><td>35</td><td class="pts">65</td></tr>
+<tr class="uel"><td class="pos">5</td><td class="team-name">Como 1907</td><td>35</td><td class="pts">62</td></tr>
+<tr class="uecl"><td class="pos">6</td><td class="team-name">AS Roma</td><td>34</td><td class="pts">61</td></tr>
+<tr class=""><td class="pos">7</td><td class="team-name">Atalanta BC</td><td>35</td><td class="pts">55</td></tr>
+<tr class=""><td class="pos">8</td><td class="team-name">Bologna FC 1909</td><td>35</td><td class="pts">49</td></tr>
+<tr class=""><td class="pos">9</td><td class="team-name">US Sassuolo Calcio</td><td>35</td><td class="pts">49</td></tr>
+<tr class=""><td class="pos">10</td><td class="team-name">SS Lazio</td><td>34</td><td class="pts">48</td></tr>
       </tbody>
     </table>
     <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions League</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa League</div>
+      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
+      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
+      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
+      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
     </div>
   </div>
-
-  <!-- LIGUE 1 -->
   <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #00205622, #EF313022);">
+    <div class="card-header" style="background: linear-gradient(135deg, #00205622, #00205611);">
       <span class="flag">🇫🇷</span>
       <span>Ligue 1 McDonald's</span>
-      <span class="badge">Jornada 30</span>
     </div>
     <table>
-      <thead>
-        <tr>
-          <th>#</th><th>Equip</th><th>PJ</th><th>Pts</th>
-        </tr>
-      </thead>
+      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
       <tbody>
-        <tr class="ucl champion-row">
-          <td class="pos">1</td><td class="team-name">Paris Saint-Germain</td><td>29</td><td class="pts">66</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">2</td><td class="team-name">RC Lens</td><td>29</td><td class="pts">62</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">3</td><td class="team-name">LOSC Lille</td><td>30</td><td class="pts">54</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">4</td><td class="team-name">Olympique Lyonnais</td><td>30</td><td class="pts">54</td>
-        </tr>
-        <tr class="uel">
-          <td class="pos">5</td><td class="team-name">Stade Rennais</td><td>30</td><td class="pts">53</td>
-        </tr>
+<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">Paris Saint-Germain FC</td><td>31</td><td class="pts">70</td></tr>
+<tr class="ucl"><td class="pos">2</td><td class="team-name">Racing Club de Lens</td><td>31</td><td class="pts">64</td></tr>
+<tr class="ucl"><td class="pos">3</td><td class="team-name">Olympique Lyonnais</td><td>32</td><td class="pts">60</td></tr>
+<tr class="ucl"><td class="pos">4</td><td class="team-name">Lille OSC</td><td>32</td><td class="pts">58</td></tr>
+<tr class="uel"><td class="pos">5</td><td class="team-name">Stade Rennais FC 1901</td><td>32</td><td class="pts">56</td></tr>
+<tr class="uecl"><td class="pos">6</td><td class="team-name">AS Monaco FC</td><td>32</td><td class="pts">54</td></tr>
+<tr class=""><td class="pos">7</td><td class="team-name">Olympique de Marseille</td><td>32</td><td class="pts">53</td></tr>
+<tr class=""><td class="pos">8</td><td class="team-name">RC Strasbourg Alsace</td><td>31</td><td class="pts">46</td></tr>
+<tr class=""><td class="pos">9</td><td class="team-name">FC Lorient</td><td>32</td><td class="pts">42</td></tr>
+<tr class=""><td class="pos">10</td><td class="team-name">Toulouse FC</td><td>32</td><td class="pts">41</td></tr>
       </tbody>
     </table>
     <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions League</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa League</div>
+      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
+      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
+      <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
+      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
     </div>
   </div>
-
-  <!-- PRIMEIRA LIGA -->
   <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #00612922, #DA202022);">
+    <div class="card-header" style="background: linear-gradient(135deg, #00612922, #00612911);">
       <span class="flag">🇵🇹</span>
       <span>Liga Portugal Betclic</span>
-      <span class="badge">Jornada 31</span>
     </div>
     <table>
-      <thead>
-        <tr>
-          <th>#</th><th>Equip</th><th>PJ</th><th>Pts</th>
-        </tr>
-      </thead>
+      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
       <tbody>
-        <tr class="ucl champion-row">
-          <td class="pos">1</td><td class="team-name">FC Porto</td><td>31</td><td class="pts">82</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">2</td><td class="team-name">SL Benfica</td><td>31</td><td class="pts">75</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">3</td><td class="team-name">Sporting CP</td><td>30</td><td class="pts">72</td>
-        </tr>
-        <tr class="uel">
-          <td class="pos">4</td><td class="team-name">SC Braga</td><td>31</td><td class="pts">56</td>
-        </tr>
-        <tr class="uecl">
-          <td class="pos">5</td><td class="team-name">FC Famalicão</td><td>31</td><td class="pts">51</td>
-        </tr>
+<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">FC Porto</td><td>32</td><td class="pts">85</td></tr>
+<tr class="ucl"><td class="pos">2</td><td class="team-name">Sport Lisboa e Benfica</td><td>32</td><td class="pts">76</td></tr>
+<tr class="ucl"><td class="pos">3</td><td class="team-name">Sporting Clube de Portugal</td><td>31</td><td class="pts">73</td></tr>
+<tr class="ucl"><td class="pos">4</td><td class="team-name">Sporting Clube de Braga</td><td>32</td><td class="pts">57</td></tr>
+<tr class="uel"><td class="pos">5</td><td class="team-name">FC Famalicão</td><td>32</td><td class="pts">52</td></tr>
+<tr class="uecl"><td class="pos">6</td><td class="team-name">Gil Vicente FC</td><td>32</td><td class="pts">50</td></tr>
+<tr class=""><td class="pos">7</td><td class="team-name">Vitória SC</td><td>31</td><td class="pts">42</td></tr>
+<tr class=""><td class="pos">8</td><td class="team-name">Moreirense FC</td><td>32</td><td class="pts">42</td></tr>
+<tr class=""><td class="pos">9</td><td class="team-name">GD Estoril Praia</td><td>32</td><td class="pts">38</td></tr>
+<tr class=""><td class="pos">10</td><td class="team-name">FC Alverca</td><td>32</td><td class="pts">38</td></tr>
       </tbody>
     </table>
     <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions League</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa League</div>
+      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
+      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
       <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
+      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
     </div>
   </div>
-
-  <!-- EREDIVISIE -->
   <div class="card">
-    <div class="card-header" style="background: linear-gradient(135deg, #AE163522, #FF820022);">
+    <div class="card-header" style="background: linear-gradient(135deg, #AE163522, #AE163511);">
       <span class="flag">🇳🇱</span>
       <span>Eredivisie</span>
-      <span class="badge champion">✓ Campió</span>
     </div>
-    <div class="champion-banner">🏆 PSV Eindhoven — Campió el 5 d'abril (27è títol)</div>
     <table>
-      <thead>
-        <tr>
-          <th>#</th><th>Equip</th><th>PJ</th><th>Pts</th>
-        </tr>
-      </thead>
+      <thead><tr><th>#</th><th>Equip</th><th>PJ</th><th>Pts</th></tr></thead>
       <tbody>
-        <tr class="ucl champion-row">
-          <td class="pos">1</td><td class="team-name">PSV Eindhoven 🏆</td><td>32</td><td class="pts">—</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">2</td><td class="team-name">Feyenoord</td><td>32</td><td class="pts">—</td>
-        </tr>
-        <tr class="ucl">
-          <td class="pos">3</td><td class="team-name">AFC Ajax</td><td>32</td><td class="pts">—</td>
-        </tr>
-        <tr class="uel">
-          <td class="pos">4</td><td class="team-name">NEC Nijmegen</td><td>32</td><td class="pts">—</td>
-        </tr>
-        <tr class="uecl">
-          <td class="pos">5</td><td class="team-name">AZ Alkmaar</td><td>32</td><td class="pts">—</td>
-        </tr>
+<tr class="ucl champion-row"><td class="pos">1</td><td class="team-name">PSV</td><td>32</td><td class="pts">78</td></tr>
+<tr class="ucl"><td class="pos">2</td><td class="team-name">Feyenoord Rotterdam</td><td>32</td><td class="pts">61</td></tr>
+<tr class="ucl"><td class="pos">3</td><td class="team-name">NEC</td><td>32</td><td class="pts">56</td></tr>
+<tr class="ucl"><td class="pos">4</td><td class="team-name">AFC Ajax</td><td>32</td><td class="pts">55</td></tr>
+<tr class="uel"><td class="pos">5</td><td class="team-name">FC Twente '65</td><td>32</td><td class="pts">55</td></tr>
+<tr class="uecl"><td class="pos">6</td><td class="team-name">AZ</td><td>32</td><td class="pts">50</td></tr>
+<tr class=""><td class="pos">7</td><td class="team-name">SC Heerenveen</td><td>32</td><td class="pts">50</td></tr>
+<tr class=""><td class="pos">8</td><td class="team-name">FC Utrecht</td><td>32</td><td class="pts">47</td></tr>
+<tr class=""><td class="pos">9</td><td class="team-name">Sparta Rotterdam</td><td>32</td><td class="pts">43</td></tr>
+<tr class=""><td class="pos">10</td><td class="team-name">FC Groningen</td><td>32</td><td class="pts">42</td></tr>
       </tbody>
     </table>
     <div class="legend">
-      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions League</div>
-      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa League</div>
+      <div class="leg-item"><div class="leg-dot leg-ucl"></div>Champions</div>
+      <div class="leg-item"><div class="leg-dot leg-uel"></div>Europa</div>
       <div class="leg-item"><div class="leg-dot leg-uecl"></div>Conference</div>
+      <div class="leg-item"><div class="leg-dot leg-rel"></div>Descens</div>
     </div>
   </div>
-
 </div>
-
-<p class="updated">Dades aproximades · Font: cerca web · Actualitza el fitxer executant <code>actualitzar_lligues.py</code></p>
-
+<p class="updated">Font: football-data.org · Actualitzat automàticament</p>
 </body>
 </html>
