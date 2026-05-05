@@ -249,7 +249,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   <span style="font-size:1.35rem">⚽</span>
   <h1>Lligues Europees 2025/26</h1>
   <span class="meta" id="metaDate"></span>
-  <a href="https://github.com/omarimonagentai/europeanleagues/actions/workflows/update.yml"
+  <a href="https://github.com/omarimonagentai/european_leagues/actions/workflows/update.yml"
      target="_blank" rel="noopener"
      class="refresh-btn"
      title="Demana refresc de dades a l'Action de GitHub">↻ Actualitzar</a>
